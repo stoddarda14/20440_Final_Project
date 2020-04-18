@@ -241,6 +241,12 @@ for (val in cluster_nums)
 #save differential / canonical intersection
 out_file1 <- "data/DGE_lists/liver_canonical.csv"
 lapply(factor_intersect, function(x) write.table( data.frame(x), out_file1 , append= T, sep=',', row.names=FALSE ))
+head(cluster_markers_screened['Top2a',])
+
+#this doesn't work
+#new <- cluster_markers_screened %>% filter(row.names(cluster_markers_screened) %in% factor_vector)
+#new <- cluster_markers_screened[cluster_markers_screened$Name %in% factor_vector ]
+#head(new)
 #####
 
 
@@ -312,6 +318,13 @@ out_file_2 <- "figures/canonical_expression/canonical_violin_liver.pdf"
 pdf(file = out_file_2, width = 10, height = 20)
 VlnPlot(liver_0.25, canonical_factors_to_plot)
 dev.off()
+
+out_file_3 <- "figures/canonical_expression/canonical_heatmap_liver.pdf"
+pdf(file = out_file_3, width = 10, height = 4 )
+DoHeatmap(object = liver_0.25,features = factor_vector, raster=FALSE) #or canonical_factors_to_plot
+dev.off()
+
+
 #####
 
 
