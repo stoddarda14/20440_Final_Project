@@ -10,6 +10,7 @@
 # Load Seurat library for single cell sequencing data analysis
 library(Seurat)
 library(ggplot2)
+library(tibble)
 
 ##########
 #file handling
@@ -213,8 +214,6 @@ for (i in 1:n_rows)
 print(factor_vector)
 #########
 
-library(tibble)
-
 # Redo AGAIN since seemed overclustered 
 # Discovery of differentially expressed features (markers for each cluster)
 # Identify markers and export to a text file 
@@ -241,7 +240,6 @@ for (val in cluster_nums)
 #save differential / canonical intersection
 out_file1 <- "data/DGE_lists/liver_canonical.csv"
 lapply(factor_intersect, function(x) write.table( data.frame(x), out_file1 , append= T, sep=',', row.names=FALSE ))
-head(cluster_markers_screened['Top2a',])
 
 #this doesn't work
 #new <- cluster_markers_screened %>% filter(row.names(cluster_markers_screened) %in% factor_vector)
