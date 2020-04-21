@@ -253,15 +253,15 @@ sink()
 
 
 # Relabel clusters based on researching canonical markers for endothelial cell types and comparing to differentially expressed genes
-new.cluster.ids <-c("Artery 1","Capillary 1","Venule","Capillary 2","Vein","Artery 2","Lymphatic")
+new.cluster.ids <-c("Capillary 1","Capillary 2","Venule","Capillary 3","Vein","Artery","Lymphatic")
 names(new.cluster.ids) <- levels(lung_0.5)
 lung_0.5 <- RenameIdents(lung_0.5, new.cluster.ids)
 
-pdf(file = "C:/Users/Amanda Hornick/myfolder2/plots/lung_labeled_clusters_res_0.5.pdf", width = 5, height = 4)
+pdf(file = "figures/clustering/lung_labeled_clusters.pdf", width = 5, height = 4)
 DimPlot(lung_0.5, reduction = "umap", pt.size = 0.1) + ggtitle(label = "UMAP Res = 0.5")
 dev.off()
 
-pdf(file = "C:/Users/Amanda Hornick/myfolder2/plots/lung_labeled_on_clusters_res_0.5.pdf", width = 5, height = 4)
+pdf(file = "figures/clustering/lung_labeled_on_clusters.pdf", width = 5, height = 4)
 DimPlot(lung_0.5, reduction = "umap", label = TRUE, label.size = 3, repel = TRUE, pt.size = 0.5) + NoLegend() + ggtitle(label = "UMAP Res = 0.5")
 dev.off()
 

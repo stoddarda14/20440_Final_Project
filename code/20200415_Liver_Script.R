@@ -291,15 +291,15 @@ sink()
 
 
 # Relabel clusters based on researching canonical markers for endothelial cell types and comparing to differentially expressed genes
-new.cluster.ids <-c("Artery 1","Artery 2","Venule","Sinusoidal","Proliferating")
+new.cluster.ids <-c("Capillary","Central Vein","Portal Vein","Hepatic Artery","Proliferating")
 names(new.cluster.ids) <- levels(liver_0.25)
 liver_0.25 <- RenameIdents(liver_0.25, new.cluster.ids)
 
-pdf(file = "C:/Users/Amanda Hornick/myfolder2/plots/liver_labeled_clusters_res_0.25.pdf", width = 5, height = 4)
+pdf(file = "figures/clustering/liver_labeled_clusters.pdf", width = 5, height = 4)
 DimPlot(liver_0.25, reduction = "umap", pt.size = 0.1) + ggtitle(label = "UMAP Res = 0.25")
 dev.off()
 
-pdf(file = "C:/Users/Amanda Hornick/myfolder2/plots/liver_labeled_on_clusters_res_0.25.pdf", width = 5, height = 4)
+pdf(file = "figures/clustering/liver_labeled_on_clusters.pdf", width = 5, height = 4)
 DimPlot(liver_0.25, reduction = "umap", label = TRUE, label.size = 3, repel = TRUE, pt.size = 0.5) + NoLegend() + ggtitle(label = "UMAP Res = 0.25")
 dev.off()
 
@@ -324,6 +324,11 @@ dev.off()
 
 
 #####
+
+out_file_4 <- "figures/liver_test.pdf"
+pdf(file = out_file_4, width = 20, height = 20)
+FeaturePlot(liver_0.25, features = 'Vwf', reduction = "umap", pt.size = 1, cols = c("darkolivegreen1","darkolivegreen"))
+dev.off()
 
 
 
