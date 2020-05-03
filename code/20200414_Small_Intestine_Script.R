@@ -185,9 +185,9 @@ for (val in cluster_nums)
   cluster_markers <- FindMarkers(si_0.5, ident.1 = val, min.pct = 0.25)
   
   #filter for adj_pvalue < .05
-  cluster_markers_screened <- cluster_markers %>% rownames_to_column('gene') %>% filter(p_val_adj < .05) %>% column_to_rownames('gene')
+  #cluster_markers_screened <- cluster_markers %>% rownames_to_column('gene') %>% filter(p_val_adj < .05) %>% column_to_rownames('gene')
   #get interscection with canonical factors
-  factor_intersect[[val+1]]<-intersect(factor_vector,row.names(cluster_markers_screened))
+  factor_intersect[[val+1]]<-intersect(factor_vector,row.names(cluster_markers))
   
   # Number each filename by cluster markers are for 
   #filename <- sprintf("C:/Users/Amanda Hornick/myfolder2/data/SI_Cluster_%i_Markers.txt", val)
@@ -227,7 +227,7 @@ sink()
 
 
 # Relabel clusters based on researching canonical markers for endothelial cell types and comparing to differentially expressed genes
-new.cluster.ids <-c("Lymphatic","Capillary 1","Capillary 2","Arteriole","Artery","Vein")
+new.cluster.ids <-c("Lymphatic","Capillary Aqp7+","Capillary 2","Arteriole","Artery","Vein")
 names(new.cluster.ids) <- levels(si_0.5)
 si_0.5 <- RenameIdents(si_0.5, new.cluster.ids)
 
@@ -249,7 +249,7 @@ for (i in 1:length(factor_intersect))
 canonical_factors_to_plot <- unique(canonical_factors_to_plot)
 out_file_2 <- "figures/canonical_expression/canonical_violin_SI.pdf"
 pdf(file = out_file_2, width = 10, height = 13)
-VlnPlot(si_0.5, canonical_factors_to_plot)
+VlnPlot(si_0.5, canonical_factors_to_plot,)
 dev.off()
 
 out_file_3 <- "figures/canonical_expression/canonical_heatmap_SI.pdf"

@@ -181,9 +181,9 @@ for (val in cluster_nums)
   cluster_markers <- FindMarkers(kidney_0.5, ident.1 = val, min.pct = 0.25)
   
   #filter for adj_pvalue < .05
-  cluster_markers_screened <- cluster_markers %>% rownames_to_column('gene') %>% filter(p_val_adj < .05) %>% column_to_rownames('gene')
+  #cluster_markers_screened <- cluster_markers %>% rownames_to_column('gene') %>% filter(p_val_adj < .05) %>% column_to_rownames('gene')
   #get interscection with canonical factors
-  factor_intersect[[val+1]]<-intersect(factor_vector,row.names(cluster_markers_screened))
+  factor_intersect[[val+1]]<-intersect(factor_vector,row.names(cluster_markers))
   
   # Number each filename by cluster markers are for 
   #filename <- sprintf("C:/Users/Amanda Hornick/myfolder2/data/Kidney_Cluster_%i_Markers_Res_0.5.txt", val)
