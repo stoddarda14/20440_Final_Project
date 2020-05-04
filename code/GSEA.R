@@ -50,13 +50,13 @@ prep_data <- function(input_file_name)
 #set files names and pwd, call prep data
 #####
 setwd("C:/Users/Amy/Documents/github/20440_Final_Project")
-input_file <- "data/DGE_lists/SI_Cluster_0_Markers.txt"
-input_file_2 <- "data/DGE_lists/SI_Cluster_1_Markers.txt"
-#input_file_3 <- "data/DGE_lists/Lung_Cluster_5_Markers_Res_0.5.txt"
+input_file <- "data/DGE_lists/Lung_Cluster_2_Markers_Res_0.5.txt"
+input_file_2 <- "data/DGE_lists/Lung_Cluster_4_Markers_Res_0.5.txt"
+input_file_3 <- "data/DGE_lists/Lung_Cluster_5_Markers_Res_0.5.txt"
 
 dge_filtered_1 <-prep_data(input_file)
 dge_filtered_2 <-prep_data(input_file_2)
-#dge_filtered_3 <-prep_data(input_file_3)
+dge_filtered_3 <-prep_data(input_file_3)
 
 #####
 
@@ -115,7 +115,8 @@ write.csv(y@result, file = 'data/GSEA_output/Lung_GO_5.csv', row.names = FALSE, 
 
 #run comparative enrichment analysis and plot
 #####
-cluster_compare <- compareCluster(geneCluster=list("Lymphatic"=dge_filtered_1$EntrezID, "Capillary 1"=dge_filtered_2$EntrezID), fun= "enrichPathway", organism = "mouse", pvalueCutoff=0.05, readable=T)
+cluster_compare <- compareCluster(geneCluster=list("Venule"=dge_filtered_1$EntrezID, "Vein"=dge_filtered_2$EntrezID), 
+                                  "Artery"=dge_filtered_3$EntrezID, fun= "enrichPathway", organism = "mouse", pvalueCutoff=0.05, readable=T)
 
 
 pdf(file = "figures/GSEA/15_dotplot_SI_0_1_compare_resized.pdf", width = 10, height = 8)
@@ -126,10 +127,13 @@ dev.off()
 
 #run comparative GO analysis and plot
 #####
-cluster_compare_GO <- compareCluster(geneCluster=list("Lymphatic"=dge_filtered_1$EntrezID, "Capillary 1"=dge_filtered_2$EntrezID), fun= "enrichGO", OrgDb = 'org.Mm.eg.db', pvalueCutoff=0.05, qvalueCutoff=0.10, readable=T)
-
-pdf(file = "figures/GSEA/15_dotplot_SI_0_1_compare_GO_resized.pdf", width = 10, height = 8)
-dotplot(cluster_compare_GO,showCategory=15)
+cluster_compare_GO <- compareCluster(geneCluster=list("Venule"=dge_filtered_1$EntrezID, "Vein"=dge_filtered_2$EntrezID, "Artery"=dge_filtered_3$EntrezID), fun= "enrichGO", OrgDb = 'org.Mm.eg.db', pvalueCutoff=0.05, qvalueCutoff=0.10, readable=T)
+head(as.data.frame(cluster_compare_GO))
+df_CC_GO <- as.data.frame(cluster_compare_GO)
+write.csv(df_CC_GO, file = 'data/GSEA_output/Lung_GO_CC.csv', row.names = FALSE, col.names = TRUE)
+#print(df_CC_GO$Cluster[1])
+pdf(file = "figures/GSEA/5_dotplot_Lung_2_4_5_compare_GO.pdf", width = 10, height = 4)
+dotplot(cluster_compare_GO,showCategory=5)
 dev.off()
 
 #####
